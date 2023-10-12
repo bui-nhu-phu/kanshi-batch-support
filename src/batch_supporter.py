@@ -15,6 +15,7 @@ def push_to_firehose_with_retry(records, stream_name, firehose_client, max_retry
     :param max_retry: numbers of retry
     """
     if max_retry < 0:
+        logger.error('Put data to firehose failed!!!')
         return
     try:
         response = firehose_client.put_record_batch(
@@ -27,6 +28,8 @@ def push_to_firehose_with_retry(records, stream_name, firehose_client, max_retry
             time.sleep(2)
             max_retry -= 1
             push_to_firehose_with_retry(records, stream_name, firehose_client, max_retry)
+        else:
+            logger.info(f'Completed put {len(records)} records')
     except Exception as e:
         logger.warning(e)
         time.sleep(2)
@@ -49,8 +52,6 @@ def push_to_firehose(push_data, delivery_stream_name, firehose_client, record_qu
             for datas in data_set:
                 records = [{'Data': json.dumps(r).encode('utf8')} for r in datas]
                 push_to_firehose_with_retry(records, delivery_stream_name, firehose_client, 10)
-
-        logger.info(f'pushed records: {count_of_push_data}')
 
         return count_of_push_data
     except Exception as e:

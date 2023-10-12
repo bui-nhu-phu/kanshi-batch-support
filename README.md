@@ -27,7 +27,7 @@ Các tham số đầu vào:
 - push_data: list danh sáchh các bản ghi sẽ được đẩy thông qua firehose
 - delivery_stream_name: tên của firehose sẽ đẩy dữ liệu
 - firehose_client: kết nối firehose client
-- record_quantity: số lượng bản ghi của mỗi lần đẩy dữ liệu
+- record_quantity: số lượng bản ghi của mỗi lần đẩy dữ liệu. Default: 500
 
 Ví dụ:
 ```
