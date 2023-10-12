@@ -61,6 +61,7 @@ def get_last_modified_datetime(plant_id, last_modified_time):
     get_last_modified_datetime does get the last modified datetime of file in folder
     """
     logger.info(f'Start get last modified datetime')
+    logger.info('This is version 0.0.2')
     logger.info(f'Completed get last modified datetime')
     return [
         {
