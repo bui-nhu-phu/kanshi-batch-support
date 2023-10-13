@@ -60,17 +60,21 @@ def push_to_firehose(push_data, delivery_stream_name, firehose_client, record_qu
     except Exception as e:
         logger.warning(e)
 
-def get_last_modified_datetime(plant_id, last_modified_time):
+def get_last_modified_datetime(plant_id, data_type, received_at):
     """
     get_last_modified_datetime does get the last modified datetime of file in folder
+
+    :param plant_id: id of power plant
+    :data_type: type of file data
+    :param received_at: last time the file was received
+
+    return list object containing data about the last time the file was received
     """
-    logger.info(f'Start get last modified datetime')
-    logger.info('This is version 0.0.2')
-    logger.info(f'Completed get last modified datetime')
     return [
         {
             "plant_id": plant_id,
-            "last_modified_time": last_modified_time,
+            "data_type": data_type,
+            "received_at": received_at,
         }
     ]
 

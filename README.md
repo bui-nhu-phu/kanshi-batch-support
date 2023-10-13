@@ -6,10 +6,14 @@ kanshi-lib bao gồm các hàm dùng chung hỗ trợ cho các dự án của te
 ## Cách cài đặt
 Cài đặt bằng pip
 ```
+pip install git+https://github.com/afterfit/kanshi-lib.git@
+
+# hoặc download theo version
 pip install git+https://github.com/afterfit/kanshi-lib.git@${tagname}
 ```
 ${tagname}: tagname là tên versionn, ví dụ: 0.0.1
 
+## Chi tiết các hàm
 ### 1. logger
 logger được thiết kế để xuất log trong quá trình chương trình được thực thi, tuân theo các log level chính info, error, warning,...
 
@@ -144,4 +148,26 @@ s3_resource = boto3.resource('s3',
 
 sample_json_data = get_json_data_from_s3('your_bucket_name', 'your_csv_key', s3_resource)
 
+```
+
+### 8. get_last_modified_datetime
+get_last_modified_datetime là hàm thực hiện việc tạo ra một danh sách các object chứa thông tin về thời điểm cuối cùng nhận file dữ liệu
+
+Các tham số đầu vào:
+- plant_id: dữ liệu kiểu str, id của trạm điện
+- data_type: kiểu dữ liệu sẽ check là gì
+- received_at: dữ liệu kiểu str, là dữ liệu thời gian của lần cuối cùng nhận được file
+
+Ví dụ: 
+```
+last_modified_datetime = get_last_modified_datetime('your_plant_id', 'your_data_type', '2023-08-09T09:20:26+09:00')
+
+print(last_modified_datetime)
+#[
+#   {
+#       "plant_id": "your_plant_id",
+#       "data_type": "your_data_type",
+#       "received_at": "2023-08-09T09:20:26+09:00"
+#   }    
+#]
 ```
