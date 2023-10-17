@@ -4,9 +4,16 @@ __author_email__='bn.phu@afterfit.co.jp'
 import botocore
 import csv
 import json
+import requests
 import time
 from datetime import datetime
+from dotenv import load_dotenv
 from logger import logger
+from os import getenv
+
+load_dotenv()
+
+API_BASE_URL = getenv('API_BASE_URL')
 
 def push_to_firehose_with_retry(records, stream_name, firehose_client, max_retry=10):
     """
@@ -199,3 +206,24 @@ def get_csv_data_from_s3(bucket_name, key, s3_resource, encoding="cp932"):
         rows = [row for row in reader]
 
     return rows
+
+def get_plant_master_data(device_type, serial_number, api_access_key, api_url=API_BASE_URL):
+    """
+    get_plant_master_data does get plant information by device type and serial number
+
+    :param device_type: type of device
+    :param serial_number: serial number of device
+    :param api_access_key: api access key
+    :param api_url: url of api
+
+    return plant information
+    """
+    try:
+        res = requests.get(f'{api_url}/v1/batch/plant/device/{device_type}/{serial_number}',
+                       headers={"X-Access-Key": api_access_key})
+        if res.status_code == 200:
+            return res.json()
+        else:
+            return
+    except Exception as e:
+        logger.warning(e)

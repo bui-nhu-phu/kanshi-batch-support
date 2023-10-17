@@ -171,3 +171,23 @@ print(last_modified_datetime)
 #   }    
 #]
 ```
+
+### 9. get_plant_master_data
+get_plant_master_data laf hàm thực hiện việc lấy ra thông tin chi tiết của một trạm điện, bao gồm cả thông tin chi tiết của các thiết bị trong trạm điện đó
+
+Các tham số đầu vào:
+- device_type: mã kiểu loại thiết bị
+- serial_number: serial number của thiết bị
+- api_access_key: api access key để access api
+- api_url: url của api. Default os.getenv('API_BASE_URL')
+
+Ví dụ:
+```
+device_type = 1 # thiết bị pcs
+serial_nnumber = 'your_serial_nnumber'
+api_access_key = 'your_access_key'
+api_url= 'your_api_url'
+
+plant_info = get_plant_master_data(device_type, serial_number, api_access_key, api_url=API_BASE_URL)
+    
+```
